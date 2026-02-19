@@ -1,8 +1,13 @@
+import Navbar from "./components/Navbar"
+
 function App() {
 
   return (
     <>
-      <h1>Dev Tinder</h1>
+      <Navbar />
+      <h1 class="text-5xl font-bold text-gray-400">
+        DevTinder
+      </h1>
     </>
   )
 }
