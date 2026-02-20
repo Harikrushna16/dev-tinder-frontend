@@ -7,10 +7,12 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useSelector((store) => store.user.user);
   const fetchLoggedInUser = async () => {
     try {
       const response = await axios.get(
@@ -26,7 +28,9 @@ const Body = () => {
     }
   };
   useEffect(() => {
-    fetchLoggedInUser();
+    if (!user) {
+      fetchLoggedInUser();
+    }
   }, []);
 
   return (

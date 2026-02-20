@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { removeUser } from "../utils/userSlice";
 
@@ -24,7 +24,9 @@ const Navbar = () => {
   return (
     <div className="navbar bg-neutral shadow-sm px-5">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">👨🏻‍💻 DevTinder</a>
+        <Link to="/" className="text-xl">
+          👨‍💻 DevTinder
+        </Link>
       </div>
       <div className="flex gap-3">
         {/* <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" /> */}
@@ -54,16 +56,16 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content bg-neutral rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <a className="justify-between">
+                  <Link to="/profile" className="justify-between">
                     Profile
                     <span className="badge">New</span>
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a>Settings</a>
+                  <Link to="/">Settings</Link>
                 </li>
                 <li>
-                  <a onClick={handleLogout}>Logout</a>
+                  <button onClick={handleLogout}>Logout</button>
                 </li>
               </ul>
             </div>
