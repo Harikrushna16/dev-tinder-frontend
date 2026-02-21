@@ -92,15 +92,6 @@ const UpdateProfile = ({ user }) => {
             onChange={(e) => setProfile({ ...profile, age: e.target.value })}
           />
 
-          <label className="label">Bio</label>
-          <input
-            type="text"
-            className="input w-full"
-            placeholder="Bio"
-            value={profile.bio}
-            onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-          />
-
           <label className="label">Gender</label>
           <select
             className="select w-full"
@@ -125,6 +116,14 @@ const UpdateProfile = ({ user }) => {
             onChange={(e) =>
               setProfile({ ...profile, profilePicture: e.target.value })
             }
+          />
+
+          <label className="label">Bio</label>
+          <textarea
+            className="textarea w-full"
+            placeholder="Bio"
+            value={profile.bio}
+            onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
           />
           {error && <p className="text-red-500 mt-2">{error}</p>}
           <button
