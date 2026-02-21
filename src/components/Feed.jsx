@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addFeed } from "../utils/feedSlice";
 import { useSelector } from "react-redux";
+import UserCard from "./userCard";
 
 const Feed = () => {
   const feed = useSelector((store) => store.feed.feed);
@@ -28,21 +29,10 @@ const Feed = () => {
   if (!feed) return <div className="text-center">No feed available</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      {feed.map((user) => {
-        console.log(user);
-        return (
-          <div key={user?._id} className="card w-96 bg-neutral shadow-xl">
-            <div className="card-body">
-              <h2 className="card-title">{user?.firstName}</h2>
-              <div className="card-actions justify-end">
-                <button className="btn btn-primary">Like</button>
-                <button className="btn btn-secondary">Dislike</button>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+    <div className="flex flex-col items-center justify-center pt-5">
+      {feed.map((user) => (
+        <UserCard key={user?._id} user={user} />
+      ))}
     </div>
   );
 };
