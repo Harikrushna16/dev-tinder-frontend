@@ -26,14 +26,15 @@ const Feed = () => {
     getFeed();
   }, []);
 
-  if (!feed) return <div className="text-center">No feed available</div>;
+  if (!feed || feed.length === 0)
+    return <div className="text-center">No feed available</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center pt-5">
-      {feed.map((user) => (
-        <UserCard key={user?._id} user={user} />
-      ))}
-    </div>
+    feed && (
+      <div className="flex flex-col items-center justify-center pt-5">
+        <UserCard user={feed[0]} />
+      </div>
+    )
   );
 };
 
