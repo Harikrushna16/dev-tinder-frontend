@@ -40,7 +40,7 @@ const Connections = () => {
               <img
                 src={connection.profilePicture}
                 alt="profile"
-                className="w-20 h-20 rounded-full"
+                className="w-20 h-20 rounded-full object-cover"
               />
             </div>
             <div className="flex justify-center flex-col gap-2">
