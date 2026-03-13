@@ -12,12 +12,19 @@ const Login = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
+      if (email === "" || password === "") {
+        setError("Please fill all the fields");
+        return;
+      }
+      setLoading(true);
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_API_URL}/auth/login`,
         {
@@ -30,11 +37,18 @@ const Login = () => {
       navigate("/");
     } catch (error) {
       setError(error?.response?.data?.message || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleRegister = async () => {
     try {
+      if (firstName === "" || lastName === "" || email === "" || password === "" || confirmPassword === "") {
+        setError("Please fill all the fields");
+        return;
+      }
+      setLoading(true);
       if (password !== confirmPassword) {
         setError("Passwords do not match");
         return;
@@ -49,10 +63,11 @@ const Login = () => {
         },
         { withCredentials: true },
       );
-      dispatch(addUser(response.data.data));
-      navigate("/profile");
+      setMessage(response.data.message);
     } catch (error) {
       setError(error?.response?.data?.message || error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,6 +95,7 @@ const Login = () => {
               placeholder="First Name"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
+              onFocus={() => setError("")}
             />
 
             <label className="label">Last Name</label>
@@ -88,6 +104,7 @@ const Login = () => {
               className="input"
               placeholder="Last Name"
               value={lastName}
+              onFocus={() => setError("")}
               onChange={(e) => setLastName(e.target.value)}
             />
           </>
@@ -100,6 +117,7 @@ const Login = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onFocus={() => setError("")}
         />
 
         <label className="label">Password</label>
@@ -109,6 +127,7 @@ const Login = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onFocus={() => setError("")}
         />
         {!isLoginForm && (
           <>
@@ -119,12 +138,27 @@ const Login = () => {
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              onFocus={() => setError("")}
             />
           </>
         )}
         {error && <p className="text-red-500 mt-2">{error}</p>}
-        <button className="btn btn-neutral mt-5" onClick={handleAuth}>
-          {isLoginForm ? "Login" : "Register"}
+        <button className="btn btn-neutral mt-5 relative flex items-center justify-center gap-2" onClick={handleAuth} disabled={loading}>
+          {loading && (
+            <div className="spinner">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          )}
+          <span>{isLoginForm ? "Login" : "Register"}</span>
         </button>
         <p className="mt-2 cursor-pointer text-center">
           {!isLoginForm
